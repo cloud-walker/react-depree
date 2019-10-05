@@ -4,6 +4,7 @@
   "scripts": {
     "test": "jest"
   },
+  "license": "MIT",
   "devDependencies": {
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
