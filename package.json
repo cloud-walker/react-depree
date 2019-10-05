@@ -5,6 +5,10 @@
     "test": "jest"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloud-walker/react-depree"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.6.2",
     "@babel/preset-react": "^7.0.0",
