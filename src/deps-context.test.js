@@ -54,6 +54,9 @@ test('it should throw if no depsMap given', () => {
 test('it should leave the deps untouched if env is production', () => {
   const originalEnv = process.env
   process.env = {...originalEnv, NODE_ENV: 'production'}
+  DummyComponent.useDeps = provideDeps({
+    getThing,
+  })
 
   const {getByText} = render(
     <DepsProvider depsMap={{[DummyComponent]: {getThing: () => of('bar')}}}>
