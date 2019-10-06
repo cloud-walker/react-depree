@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "test": "jest",
-    "build": "rollup src/deps-context.js --format cjs --file index.js"
+    "build": "rollup -c"
   },
   "license": "MIT",
   "repository": {
