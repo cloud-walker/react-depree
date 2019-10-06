@@ -12,9 +12,9 @@ export const DepsProvider = ({depsMap, ...props}) => {
 
 export const provideDeps = realDeps => {
   const useDeps = function() {
-    if (process.env.NODE_ENV != 'production') {
-      const depsMap = React.useContext(DepsContext)
+    const depsMap = React.useContext(DepsContext)
 
+    if (process.env.NODE_ENV != 'production') {
       return {...realDeps, ...depsMap[this]}
     }
 
