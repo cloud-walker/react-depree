@@ -2,10 +2,13 @@
   "name": "react-depree",
   "version": "0.1.0",
   "module": "./src/deps-context.js",
-  "main": "./src/deps-context.js",
+  "browser": "./src/deps-context.js",
+  "main": "./src/index.cjs.js",
   "sideEffects": false,
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "rollup -c",
+    "prepublish": "npm run build"
   },
   "license": "MIT",
   "repository": {
@@ -23,6 +26,7 @@
     "jest": "^24.9.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "rollup": "^1.23.1",
     "rxjs": "^6.5.3"
   }
 }
