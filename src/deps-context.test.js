@@ -42,13 +42,20 @@ test('it should work properly', () => {
 })
 
 test('it should throw if no depsMap given', () => {
+  jest.spyOn(console, 'error')
+  console.error.mockImplementation(() => {})
+
   expect(() => {
+    const div = document.createElement('div')
     ReactDOM.render(
       <DepsProvider>
         <DummyComponent />
       </DepsProvider>,
+      div,
     )
+    ReactDOM.unmountComponentAtNode(div)
   }).toThrow()
+  console.error.mockRestore()
 })
 
 test('it should leave the deps untouched if env is production', () => {
