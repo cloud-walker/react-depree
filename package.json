@@ -8,11 +8,11 @@
   "scripts": {
     "test": "jest",
     "build": "rollup -c",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "files": [
-    "./src/deps-context.js",
-    "./index.cjs.js"
+    "src/deps-context.js",
+    "index.cjs.js"
   ],
   "license": "MIT",
   "repository": {
