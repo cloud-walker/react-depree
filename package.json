@@ -10,6 +10,10 @@
     "build": "rollup -c",
     "prepublish": "npm run build"
   },
+  "files": [
+    "./src/deps-context.js",
+    "./index.cjs.js"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
