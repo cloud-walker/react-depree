@@ -19,7 +19,7 @@ import React from 'react'
 import {provideDeps} from 'react-depree'
 import {track} from 'imaginary-analytics'
 
-export const AddTodo = ({todo, onSuccess}) => {
+export const AddTodo = ({onSuccess}) => {
   /**
    * Here we can call useDeps hook to use our
    * dependencies, normally their reference should
@@ -27,15 +27,24 @@ export const AddTodo = ({todo, onSuccess}) => {
    * inside React.useEffect or React.useMemo and so on!
    */
   const {createTodo, track} = AddTodo.useDeps()
+  const [todo, setTodo] = React.useState()
 
-  const handleCreateTodo = () => {
+  const handleSubmit = e => {
+    e.preventDefault()
     createTodo(todo).then(() => {
       track({id: 'CREATED_TODO', payload: todo})
       onSuccess(todo)
     })
   }
 
-  return <button onClick={handleCreateTodo}>Add Todo</button>
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        New Todo <input type="text" onChange={e => setTodo(e.target.value)} />
+      </label>
+      <button type="submit">Add Todo</button>
+    </form>
+  )
 }
 
 /**
@@ -58,7 +67,7 @@ AddTodo.useDeps = provideDeps({
 
 ```javascript
 import React from 'react'
-import {render} from '@testing-library/react'
+import {render, fireEvent} from '@testing-library/react'
 import {DepsProvider} from 'react-depree'
 
 import {TodoApp} from './TodoApp'
@@ -90,14 +99,25 @@ test('it should work properly', () => {
     <DepsProvider
       depsMap={{
         [AddTodo]: {createTodo, track},
-        [TodoList]: {getTodos, deleteTodo, updateTodo},
+        [TodoList]: {getTodos, deleteTodo, updateTodo, track},
       }}
     >
       <TodoApp />
     </DepsProvider>,
   )
 
-  // ...
+  /**
+   * We can now write our expects in peace :D
+   *
+   * (TodoList expects omitted, this is just a stupid example >_<)
+   */
+  const input = getByLabelText('New Todo')
+  const submit = getByText('Add Todo')
+
+  fireEvent.change(input, {target: {value: 'Buy the milk'}})
+  fireEvent.click(submit)
+
+  expect(createTodo).toHaveBeenCalledWith('Buy the milk')
   expect(track).toHaveBeenCalledWith({id: 'CREATED_TODO', payload: 'baz'})
 })
 ```
