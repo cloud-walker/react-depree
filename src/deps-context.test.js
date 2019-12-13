@@ -33,7 +33,7 @@ DummyComponent.useDeps = provideDeps({
 
 test('it should work properly', () => {
   const {getByText} = render(
-    <DepsProvider depsMap={{[DummyComponent]: {getThing: () => of('bar')}}}>
+    <DepsProvider depsMap={[[DummyComponent, {getThing: () => of('bar')}]]}>
       <DummyComponent />,
     </DepsProvider>,
   )
@@ -66,7 +66,7 @@ test('it should leave the deps untouched if env is production', () => {
   })
 
   const {getByText} = render(
-    <DepsProvider depsMap={{[DummyComponent]: {getThing: () => of('bar')}}}>
+    <DepsProvider depsMap={[[DummyComponent, {getThing: () => of('bar')}]]}>
       <DummyComponent />,
     </DepsProvider>,
   )

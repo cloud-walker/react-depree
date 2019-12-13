@@ -97,10 +97,10 @@ test('it should work properly', () => {
      * TodoApp
      */
     <DepsProvider
-      depsMap={{
-        [AddTodo]: {createTodo, track},
-        [TodoList]: {getTodos, deleteTodo, updateTodo, track},
-      }}
+      depsMap={[
+        [AddTodo, {createTodo, track}],
+        [TodoList, {getTodos, deleteTodo, updateTodo, track}],
+      ]}
     >
       <TodoApp />
     </DepsProvider>,
