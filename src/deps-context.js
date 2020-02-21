@@ -18,14 +18,11 @@ export const DepsProvider = ({depsMap, ...props}) => {
 }
 
 export const provideDeps = realDeps => {
-  const useDeps =
-    process.env.NODE_ENV == 'production'
-      ? () => realDeps
-      : function() {
-          const depsMap = React.useContext(DepsContext)
+  const useDeps = function() {
+    const depsMap = React.useContext(DepsContext)
 
-          return {...realDeps, ...depsMap.get(this)}
-        }
+    return {...realDeps, ...depsMap.get(this)}
+  }
 
   return useDeps
 }
