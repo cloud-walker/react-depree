@@ -1,6 +1,6 @@
 {
   "name": "react-depree",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "module": "src/deps-context.js",
   "main": "index.cjs.js",
   "sideEffects": false,
