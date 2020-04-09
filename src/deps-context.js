@@ -8,7 +8,7 @@ const DepsContext = React.createContext(new Map())
  * @param {Deps[]} props.depsMap
  */
 export const DepsProvider = ({depsMap, ...props}) => {
-  if (!depsMap) {
+  if (!depsMap?.length) {
     throw new Error('DepsProvider is useless without a depsMap')
   }
 
@@ -17,11 +17,30 @@ export const DepsProvider = ({depsMap, ...props}) => {
   return React.createElement(DepsContext.Provider, {...props, value})
 }
 
-export const provideDeps = realDeps => {
-  const useDeps = function() {
+export const provideDeps = (realDeps) => {
+  const useDeps = function () {
     const depsMap = React.useContext(DepsContext)
+    const fakeDeps = depsMap.get(this)
+    const realKeys = Object.keys(realDeps)
+    const fakeKeys = Object.keys(fakeDeps)
+    const sanitizedFakeDeps = fakeKeys
+      .filter((key) => !!fakeDeps[key])
+      .reduce((acc, val) => ({...acc, [val]: fakeDeps[val]}), {})
 
-    return {...realDeps, ...depsMap.get(this)}
+    if (fakeKeys.length != realKeys.length) {
+      throw new Error(`You are not declaring all the dependencies for the reference ${
+        this.name
+      }, 
+please pass a falsy value if you don't need to mock some of them.
+
+real deps: [${realKeys.toString()}]
+fake deps: [${fakeKeys.toString()}]`)
+    }
+
+    return {
+      ...realDeps,
+      ...sanitizedFakeDeps,
+    }
   }
 
   return useDeps
