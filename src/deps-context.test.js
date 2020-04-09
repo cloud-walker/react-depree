@@ -1,4 +1,4 @@
-import {of} from 'rxjs'
+import {of, interval} from 'rxjs'
 import {render, screen} from '@testing-library/react'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -80,7 +80,7 @@ test('it should throw if no deps covered', () => {
   jest.spyOn(console, 'error')
   console.error.mockImplementation(() => {})
   let errorMessage = null
-  const onCatch = (err) => (errorMessage = err.message)
+  const onCatch = err => (errorMessage = err.message)
 
   render(
     <ErrorBoundary onCatch={onCatch}>
@@ -99,4 +99,8 @@ test('it should throw if no deps covered', () => {
   `)
 
   console.error.mockRestore()
+})
+
+test('it should render normally with DepsProvider', () => {
+  render(<DummyComponent />)
 })

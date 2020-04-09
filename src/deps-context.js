@@ -17,14 +17,18 @@ export const DepsProvider = ({depsMap, ...props}) => {
   return React.createElement(DepsContext.Provider, {...props, value})
 }
 
-export const provideDeps = (realDeps) => {
+export const provideDeps = realDeps => {
   const useDeps = function () {
     const depsMap = React.useContext(DepsContext)
     const fakeDeps = depsMap.get(this)
+    if (!fakeDeps) {
+      return realDeps
+    }
+
     const realKeys = Object.keys(realDeps)
     const fakeKeys = Object.keys(fakeDeps)
     const sanitizedFakeDeps = fakeKeys
-      .filter((key) => !!fakeDeps[key])
+      .filter(key => !!fakeDeps[key])
       .reduce((acc, val) => ({...acc, [val]: fakeDeps[val]}), {})
 
     if (fakeKeys.length != realKeys.length) {
