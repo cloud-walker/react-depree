@@ -8,7 +8,7 @@ const DepsContext = React.createContext(new Map())
  * @param {Deps[]} props.depsMap
  */
 export const DepsProvider = ({depsMap, ...props}) => {
-  if (!depsMap?.length) {
+  if (!depsMap || !depsMap.length) {
     throw new Error('DepsProvider is useless without a depsMap')
   }
 
